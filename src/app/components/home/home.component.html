@@ -1,0 +1,241 @@
+<main
+  class="d-flex flex-column justify-content-center align-items-center gap-1 mt-3"
+>
+  <header
+    class="box-header bg-primary d-flex flex-column justify-content-center align-items-center shadow"
+  >
+    <h1 class="text-white">Lista de Tarefas</h1>
+  </header>
+  <section>
+    <nav>
+      <div class="bg-white my-1 d-flex justify-content-between gap-1 shadow">
+        <button class="btn bg-light" (click)="mark = 0">
+          <img
+            src="./../../../assets/img/list-task.svg"
+            alt="Todas as tarefas completas"
+          />
+          Todas
+        </button>
+        <button class="btn bg-light" (click)="mark = 1">
+          <img
+            src="./../../../assets/img/check-all.svg"
+            alt="Todas as tarefas completas"
+          />
+          Completas
+        </button>
+        <button class="btn bg-light" (click)="mark = 2">
+          <img
+            src="./../../../assets/img/card-list.svg"
+            alt="Todas as tarefas completas"
+          />
+          Incompletas
+        </button>
+      </div>
+    </nav>
+    <div
+      #img
+      *ngIf="tarefas.length; else img"
+      class="card box shadow overflow-auto"
+    >
+      <div class="card-body">
+        <div [ngSwitch]="mark">
+          <!--Lista com as tarefas concluidas-->
+          <div *ngSwitchCase="1">
+            <ul
+              #todos
+              class="margin"
+              *ngFor="let item of tarefas; let i = index"
+            >
+              <div *ngIf="item.checked">
+                <li class="d-flex align-items-center gap-2">
+                  <input
+                    #checked
+                    class="form-check-input"
+                    type="checkbox"
+                    *ngIf="!item.checked; else checked"
+                    (change)="onChecked(i)"
+                  />
+                  <label
+                    *ngIf="!item.edited"
+                    [ngClass]="{ 'text-decoration-line-through': item.checked }"
+                  >
+                  {{ item.nome }} - {{item.date | date: 'shortDate'}}
+                  </label>
+                  <input
+                    #edit
+                    class="form-control form-control-sm input-box"
+                    (keyup.enter)="item.edited = false; editForm(edit.value, i)"
+                    type="text"
+                    [value]="item.nome"
+                    *ngIf="item.edited"
+                  />
+                  <div class="ms-auto">
+                    <button class="btn m-btn">
+                      <img
+                        [src]="iconEdit"
+                        alt="update"
+                        (click)="onUpdate(i)"
+                      />
+                    </button>
+                    <button class="btn m-btn">
+                      <img
+                        [src]="iconDelet"
+                        alt="delete"
+                        (click)="ondelete(i)"
+                      />
+                    </button>
+                  </div>
+                  <ng-template #checked>
+                    <input
+                      class="form-check-input"
+                      type="checkbox"
+                      checked
+                      (change)="onChecked(i)"
+                    />
+                  </ng-template>
+                </li>
+              </div>
+            </ul>
+          </div>
+
+          <!--Lista com as tarefas não concluidas-->
+          <div *ngSwitchCase="2">
+            <ul
+              #todos
+              class="margin"
+              *ngFor="let item of tarefas; let i = index"
+            >
+              <div *ngIf="!item.checked">
+                <li class="d-flex align-items-center gap-2">
+                  <input
+                    #checked
+                    class="form-check-input"
+                    type="checkbox"
+                    *ngIf="!item.checked; else checked"
+                    (change)="onChecked(i)"
+                  />
+                  <label
+                    *ngIf="!item.edited"
+                    [ngClass]="{ 'text-decoration-line-through': item.checked }"
+                  >
+                  {{ item.nome }} - {{item.date | date: 'shortDate'}}
+                  </label>
+                  <input
+                    #edit
+                    class="form-control form-control-sm input-box"
+                    (keyup.enter)="item.edited = false; editForm(edit.value, i)"
+                    type="text"
+                    [value]="item.nome"
+                    *ngIf="item.edited"
+                  />
+                  <div class="ms-auto">
+                    <button class="btn m-btn">
+                      <img
+                        [src]="iconEdit"
+                        alt="update"
+                        (click)="onUpdate(i)"
+                      />
+                    </button>
+                    <button class="btn m-btn">
+                      <img
+                        [src]="iconDelet"
+                        alt="delete"
+                        (click)="ondelete(i)"
+                      />
+                    </button>
+                  </div>
+                  <ng-template #checked>
+                    <input
+                      class="form-check-input"
+                      type="checkbox"
+                      checked
+                      (change)="onChecked(i)"
+                    />
+                  </ng-template>
+                </li>
+              </div>
+            </ul>
+          </div>
+
+          <!--Lista com todas as tarefas-->
+          <div *ngSwitchDefault>
+            <ul
+              #todos
+              class="margin"
+              *ngFor="let item of tarefas; let i = index"
+            >
+              <li class="d-flex align-items-center gap-2">
+                <input
+                  #checked
+                  class="form-check-input"
+                  type="checkbox"
+                  *ngIf="!item.checked; else checked"
+                  (change)="onChecked(i)"
+                />
+                <label
+                  *ngIf="!item.edited"
+                  [ngClass]="{ 'text-decoration-line-through': item.checked }"
+                >
+                  {{ item.nome }} - {{item.date | date: 'shortDate'}}
+                </label>
+                <input
+                  #edit
+                  class="form-control form-control-sm input-box"
+                  (keyup.enter)="item.edited = false; editForm(edit.value, i)"
+                  type="text"
+                  [value]="item.nome"
+                  *ngIf="item.edited"
+                />
+                <div class="ms-auto">
+                  <button class="btn m-btn">
+                    <img [src]="iconEdit" alt="update" (click)="onUpdate(i)" />
+                  </button>
+                  <button class="btn m-btn">
+                    <img [src]="iconDelet" alt="delete" (click)="ondelete(i)" />
+                  </button>
+                </div>
+                <ng-template #checked>
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    checked
+                    (change)="onChecked(i)"
+                  />
+                </ng-template>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+  <!--Entrada para adicionar a tarefa a realizar na lista-->
+  <section>
+    <div
+      class="box-header bg-azul d-flex flex-column justify-content-center px-4 shadow"
+    >
+      <form [formGroup]="entrada" (ngSubmit)="onSubmit()">
+        <div class="mb-3 mt-3">
+          <input
+            class="form-control"
+            type="text"
+            #inp
+            (keyup.enter)="inp.value = ''"
+            formControlName="tarefa"
+            placeholder="Digite uma tarefa"
+          />
+        </div>
+      </form>
+    </div>
+  </section>
+</main>
+
+<ng-template #img>
+  <div class="box bg-white d-flex justify-content-center align-items-center">
+    <img src="./../../../assets/img/tarefa.jpg" alt="fundo" />
+  </div>
+</ng-template>
+
+

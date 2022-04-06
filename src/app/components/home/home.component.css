@@ -1,0 +1,28 @@
+.box{
+  width: 481px;
+  height: 400px;
+  max-height: 370px;
+}
+
+.box-header{
+  width: 481px;
+}
+
+.margin{
+  margin-left: -32px;
+  margin-bottom: -6px;
+}
+
+.m-btn{
+  margin: 0 -8px;
+}
+
+.input-box{
+  height: 26px;
+  width: 180px;
+}
+
+.bg-azul{
+  background-color: rgb(2, 2, 78);
+}
+

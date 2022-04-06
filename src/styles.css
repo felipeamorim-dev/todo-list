@@ -1,1 +1,13 @@
 /* You can add global styles to this file, and also import other style files */
+*{
+  margin: 0;
+  padding: 0;
+}
+
+ol, ul {
+	list-style: none;
+}
+
+body{
+  background-color: rgb(224, 224, 224);
+}
